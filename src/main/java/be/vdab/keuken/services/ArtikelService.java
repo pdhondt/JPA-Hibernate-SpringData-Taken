@@ -36,7 +36,7 @@ public class ArtikelService {
     }
     @Transactional
     public void wijzigVerkoopprijs(long id, BigDecimal prijs) {
-        artikelRepository.findById(id)
+        artikelRepository.findAndLockById(id)
                 .orElseThrow(ArtikelNietGevondenException::new)
                 .setVerkoopprijs(prijs);
     }
