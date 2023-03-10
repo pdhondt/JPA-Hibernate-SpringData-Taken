@@ -10,6 +10,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 @RequestMapping("artikels")
@@ -32,5 +33,9 @@ class ArtikelController {
     @PatchMapping("{id}/verkoopprijs")
     void wijzigVerkoopprijs(@PathVariable long id, @RequestBody @Valid PrijsWijziging prijs) {
         artikelService.wijzigVerkoopprijs(id, prijs.bedrag());
+    }
+    @GetMapping(params = "naamBevat")
+    List<Artikel> findByNaamBevat(String naamBevat) {
+        return artikelService.findByNaamBevat(naamBevat);
     }
 }

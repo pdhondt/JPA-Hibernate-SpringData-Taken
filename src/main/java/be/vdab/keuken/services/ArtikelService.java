@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,5 +40,8 @@ public class ArtikelService {
         artikelRepository.findAndLockById(id)
                 .orElseThrow(ArtikelNietGevondenException::new)
                 .setVerkoopprijs(prijs);
+    }
+    public List<Artikel> findByNaamBevat(String tekst) {
+        return artikelRepository.findByNaamContainsOrderByNaam(tekst);
     }
 }
