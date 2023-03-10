@@ -39,4 +39,7 @@ public class Artikel {
     public BigDecimal getVerkoopprijs() {
         return verkoopprijs;
     }
+    public void setVerkoopprijs(BigDecimal prijs) {
+        this.verkoopprijs = prijs;
+    }
 }
