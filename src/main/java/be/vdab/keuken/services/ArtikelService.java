@@ -44,4 +44,7 @@ public class ArtikelService {
     public List<Artikel> findByNaamBevat(String tekst) {
         return artikelRepository.findByNaamContainsOrderByNaam(tekst);
     }
+    public List<Artikel> findMetMinimumWinst(BigDecimal bedrag) {
+        return artikelRepository.findMetMinimumWinst(bedrag);
+    }
 }

@@ -38,4 +38,8 @@ class ArtikelController {
     List<Artikel> findByNaamBevat(String naamBevat) {
         return artikelService.findByNaamBevat(naamBevat);
     }
+    @GetMapping(params = "minimumWinst")
+    List<Artikel> findMetMiniumumWinst(BigDecimal minimumWinst) {
+        return artikelService.findMetMinimumWinst(minimumWinst);
+    }
 }
