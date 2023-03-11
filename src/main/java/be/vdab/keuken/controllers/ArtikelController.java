@@ -42,4 +42,8 @@ class ArtikelController {
     List<Artikel> findMetMiniumumWinst(BigDecimal minimumWinst) {
         return artikelService.findMetMinimumWinst(minimumWinst);
     }
+    @GetMapping("verkoopprijzen/goedkoopste")
+    BigDecimal findGoedkoopsteVerkoopprijs() {
+        return artikelService.findGoedkoopsteVerkoopprijs();
+    }
 }

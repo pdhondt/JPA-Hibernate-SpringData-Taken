@@ -47,4 +47,7 @@ public class ArtikelService {
     public List<Artikel> findMetMinimumWinst(BigDecimal bedrag) {
         return artikelRepository.findMetMinimumWinst(bedrag);
     }
+    public BigDecimal findGoedkoopsteVerkoopprijs() {
+        return artikelRepository.findGoedkoopsteVerkoopprijs();
+    }
 }

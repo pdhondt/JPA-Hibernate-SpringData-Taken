@@ -18,10 +18,16 @@ public interface ArtikelRepository extends JpaRepository<Artikel, Long> {
     List<Artikel> findByNaamContainsOrderByNaam(String tekst);
 
     @Query("""
-select a
-from Artikel a
-where a.verkoopprijs >= a.aankoopprijs + :bedrag
-order by a.verkoopprijs
-""")
+            select a
+            from Artikel a
+            where a.verkoopprijs >= a.aankoopprijs + :bedrag
+            order by a.verkoopprijs
+            """)
     List<Artikel> findMetMinimumWinst(BigDecimal bedrag);
+
+    @Query("""
+            select min(a.verkoopprijs)
+            from Artikel a
+            """)
+    BigDecimal findGoedkoopsteVerkoopprijs();
 }
