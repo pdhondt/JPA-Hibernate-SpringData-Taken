@@ -1,7 +1,8 @@
 package be.vdab.keuken.controllers;
 
 import be.vdab.keuken.domain.Artikel;
-import be.vdab.keuken.dto.NieuwArtikel;
+import be.vdab.keuken.dto.NieuwFoodArtikel;
+import be.vdab.keuken.dto.NieuwNonFoodArtikel;
 import be.vdab.keuken.exceptions.ArtikelNietGevondenException;
 import be.vdab.keuken.services.ArtikelService;
 import jakarta.validation.Valid;
@@ -26,9 +27,13 @@ class ArtikelController {
         return artikelService.findById(id)
                 .orElseThrow(ArtikelNietGevondenException::new);
     }
-    @PostMapping
-    long create(@RequestBody @Valid NieuwArtikel nieuwArtikel) {
-        return artikelService.create(nieuwArtikel);
+    @PostMapping("food")
+    long create(@RequestBody @Valid NieuwFoodArtikel nieuwFoodArtikel) {
+        return artikelService.create(nieuwFoodArtikel);
+    }
+    @PostMapping("nonfood")
+    long create(@RequestBody @Valid NieuwNonFoodArtikel nieuwNonFoodArtikel) {
+        return artikelService.create(nieuwNonFoodArtikel);
     }
     @PatchMapping("{id}/verkoopprijs")
     void wijzigVerkoopprijs(@PathVariable long id, @RequestBody @Valid PrijsWijziging prijs) {

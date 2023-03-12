@@ -1,7 +1,10 @@
 package be.vdab.keuken.services;
 
 import be.vdab.keuken.domain.Artikel;
-import be.vdab.keuken.dto.NieuwArtikel;
+import be.vdab.keuken.domain.FoodArtikel;
+import be.vdab.keuken.domain.NonFoodArtikel;
+import be.vdab.keuken.dto.NieuwFoodArtikel;
+import be.vdab.keuken.dto.NieuwNonFoodArtikel;
 import be.vdab.keuken.exceptions.ArtikelBestaatAlException;
 import be.vdab.keuken.exceptions.ArtikelNietGevondenException;
 import be.vdab.keuken.repositories.ArtikelRepository;
@@ -25,10 +28,21 @@ public class ArtikelService {
         return artikelRepository.findById(id);
     }
     @Transactional
-    public long create(NieuwArtikel nieuwArtikel) {
+    public long create(NieuwFoodArtikel nieuwArtikel) {
         try {
-            var artikel = new Artikel(nieuwArtikel.naam(), nieuwArtikel.aankoopprijs(),
-                    nieuwArtikel.verkoopprijs());
+            var artikel = new FoodArtikel(nieuwArtikel.naam(), nieuwArtikel.aankoopprijs(),
+                    nieuwArtikel.verkoopprijs(), nieuwArtikel.houdbaarheid());
+            artikelRepository.save(artikel);
+            return artikel.getId();
+        } catch (DataIntegrityViolationException ex) {
+            throw new ArtikelBestaatAlException();
+        }
+    }
+    @Transactional
+    public long create(NieuwNonFoodArtikel nieuwArtikel) {
+        try {
+            var artikel = new NonFoodArtikel(nieuwArtikel.naam(), nieuwArtikel.aankoopprijs(),
+                    nieuwArtikel.verkoopprijs(), nieuwArtikel.garantie());
             artikelRepository.save(artikel);
             return artikel.getId();
         } catch (DataIntegrityViolationException ex) {
