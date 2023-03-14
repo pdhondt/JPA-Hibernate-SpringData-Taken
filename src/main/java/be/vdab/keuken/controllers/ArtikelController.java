@@ -11,13 +11,18 @@ import jakarta.validation.constraints.PositiveOrZero;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("artikels")
 class ArtikelController {
     private final ArtikelService artikelService;
     private record PrijsWijziging(@NotNull @PositiveOrZero BigDecimal bedrag) {}
+    private record ArtikelBeknopt(long id, String naam, BigDecimal verkoopprijs) {
+        ArtikelBeknopt(Artikel artikel) {
+            this(artikel.getId(), artikel.getNaam(), artikel.getVerkoopprijs());
+        }
+    }
 
     ArtikelController(ArtikelService artikelService) {
         this.artikelService = artikelService;
@@ -40,12 +45,16 @@ class ArtikelController {
         artikelService.wijzigVerkoopprijs(id, prijs.bedrag());
     }
     @GetMapping(params = "naamBevat")
-    List<Artikel> findByNaamBevat(String naamBevat) {
-        return artikelService.findByNaamBevat(naamBevat);
+    Stream<ArtikelBeknopt> findByNaamBevat(String naamBevat) {
+        return artikelService.findByNaamBevat(naamBevat)
+                .stream()
+                .map(ArtikelBeknopt::new);
     }
     @GetMapping(params = "minimumWinst")
-    List<Artikel> findMetMiniumumWinst(BigDecimal minimumWinst) {
-        return artikelService.findMetMinimumWinst(minimumWinst);
+    Stream<ArtikelBeknopt> findMetMiniumumWinst(BigDecimal minimumWinst) {
+        return artikelService.findMetMinimumWinst(minimumWinst)
+                .stream()
+                .map(ArtikelBeknopt::new);
     }
     @GetMapping("verkoopprijzen/goedkoopste")
     BigDecimal findGoedkoopsteVerkoopprijs() {
