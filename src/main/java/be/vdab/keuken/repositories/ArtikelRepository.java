@@ -30,4 +30,10 @@ public interface ArtikelRepository extends JpaRepository<Artikel, Long> {
             from Artikel a
             """)
     BigDecimal findGoedkoopsteVerkoopprijs();
+
+    @Query("""
+            select a from Artikel a join fetch a.artikelGroep
+            where a.id = :id
+            """)
+    Optional<Artikel> findByIdMetArtikelGroep(long id);
 }

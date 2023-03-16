@@ -23,13 +23,20 @@ class ArtikelController {
             this(artikel.getId(), artikel.getNaam(), artikel.getVerkoopprijs());
         }
     }
+    private record ArtikelBeknoptMetArtikelGroepNaam(long id, String naam, BigDecimal verkoopprijs,
+                                                     String artikelGroepNaam) {
+        ArtikelBeknoptMetArtikelGroepNaam(Artikel artikel) {
+            this(artikel.getId(), artikel.getNaam(), artikel.getVerkoopprijs(), artikel.getArtikelGroep().getNaam());
+        }
+    }
 
     ArtikelController(ArtikelService artikelService) {
         this.artikelService = artikelService;
     }
     @GetMapping("{id}")
-    Artikel findById(@PathVariable long id) {
+    ArtikelBeknopt findById(@PathVariable long id) {
         return artikelService.findById(id)
+                .map(artikel -> new ArtikelBeknopt(artikel))
                 .orElseThrow(ArtikelNietGevondenException::new);
     }
     @PostMapping("food")
@@ -59,5 +66,11 @@ class ArtikelController {
     @GetMapping("verkoopprijzen/goedkoopste")
     BigDecimal findGoedkoopsteVerkoopprijs() {
         return artikelService.findGoedkoopsteVerkoopprijs();
+    }
+    @GetMapping("{id}/artikelGroepNaam")
+    ArtikelBeknoptMetArtikelGroepNaam findMetArtikelGroepNaam(@PathVariable long id) {
+        return artikelService.findByIdMetArtikelGroep(id)
+                .map(artikel -> new ArtikelBeknoptMetArtikelGroepNaam(artikel))
+                .orElseThrow(() -> new ArtikelNietGevondenException());
     }
 }
