@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-@Sql("/artikels.sql")
+@Sql({ "/artikelgroepen.sql", "/artikels.sql" })
 @AutoConfigureMockMvc
 class ArtikelControllerTest extends AbstractTransactionalJUnit4SpringContextTests {
     private final MockMvc mockMvc;

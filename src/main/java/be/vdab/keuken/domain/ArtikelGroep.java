@@ -11,12 +11,6 @@ public class ArtikelGroep {
     private long id;
     private String naam;
 
-    public ArtikelGroep(long id, String naam) {
-        this.id = id;
-        this.naam = naam;
-    }
-    protected ArtikelGroep() {}
-
     public long getId() {
         return id;
     }

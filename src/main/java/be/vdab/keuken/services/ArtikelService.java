@@ -6,7 +6,7 @@ import be.vdab.keuken.domain.NonFoodArtikel;
 import be.vdab.keuken.dto.NieuwFoodArtikel;
 import be.vdab.keuken.dto.NieuwNonFoodArtikel;
 import be.vdab.keuken.exceptions.ArtikelBestaatAlException;
-import be.vdab.keuken.exceptions.ArtikelGroepInArtikelNietGevondenException;
+import be.vdab.keuken.exceptions.ArtikelGroepNietGevondenException;
 import be.vdab.keuken.exceptions.ArtikelNietGevondenException;
 import be.vdab.keuken.repositories.ArtikelGroepRepository;
 import be.vdab.keuken.repositories.ArtikelRepository;
@@ -35,7 +35,7 @@ public class ArtikelService {
     public long create(NieuwFoodArtikel nieuwArtikel) {
         try {
             var artikelGroep = artikelGroepRepository.findById(nieuwArtikel.artikelgroepId())
-                    .orElseThrow(() -> new ArtikelGroepInArtikelNietGevondenException());
+                    .orElseThrow(ArtikelGroepNietGevondenException::new);
             var artikel = new FoodArtikel(nieuwArtikel.naam(), nieuwArtikel.aankoopprijs(),
                     nieuwArtikel.verkoopprijs(), nieuwArtikel.houdbaarheid(), artikelGroep);
             artikelRepository.save(artikel);
@@ -48,7 +48,7 @@ public class ArtikelService {
     public long create(NieuwNonFoodArtikel nieuwArtikel) {
         try {
             var artikelGroep = artikelGroepRepository.findById(nieuwArtikel.artikelgroepId())
-                    .orElseThrow(() -> new ArtikelGroepInArtikelNietGevondenException());
+                    .orElseThrow(ArtikelGroepNietGevondenException::new);
             var artikel = new NonFoodArtikel(nieuwArtikel.naam(), nieuwArtikel.aankoopprijs(),
                     nieuwArtikel.verkoopprijs(), nieuwArtikel.garantie(), artikelGroep);
             artikelRepository.save(artikel);

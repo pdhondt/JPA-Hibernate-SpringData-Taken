@@ -8,7 +8,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-@Sql("/artikels.sql")
+@Sql({ "/artikelgroepen.sql", "/artikels.sql" })
 class ArtikelRepositoryTest extends AbstractTransactionalJUnit4SpringContextTests {
     private final ArtikelRepository artikelRepository;
 
