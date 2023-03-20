@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -66,5 +67,17 @@ public abstract class Artikel {
 
     public Set<Korting> getKortingen() {
         return Collections.unmodifiableSet(kortingen);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Artikel artikel)) return false;
+        return naam.equals(artikel.naam);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(naam);
     }
 }
