@@ -73,11 +73,11 @@ public abstract class Artikel {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Artikel artikel)) return false;
-        return naam.equals(artikel.naam);
+        return naam.equalsIgnoreCase(artikel.naam);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(naam);
+        return Objects.hash(naam.toLowerCase());
     }
 }

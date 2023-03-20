@@ -11,14 +11,14 @@ import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("artikelGroepen")
-public class ArtikelGroepController {
+class ArtikelGroepController {
     private final ArtikelGroepService artikelGroepService;
 
-    public ArtikelGroepController(ArtikelGroepService artikelGroepService) {
+    ArtikelGroepController(ArtikelGroepService artikelGroepService) {
         this.artikelGroepService = artikelGroepService;
     }
     @GetMapping("{id}/artikels")
-    Stream<String> findArtikelsVanArtikelGroepById(@PathVariable long id) {
+    Stream<String> findArtikelsVanById(@PathVariable long id) {
         return artikelGroepService.findById(id)
                 .orElseThrow(() -> new ArtikelGroepNietGevondenException())
                 .getArtikels()

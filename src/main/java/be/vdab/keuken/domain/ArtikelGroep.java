@@ -1,6 +1,5 @@
 package be.vdab.keuken.domain;
 
-import be.vdab.keuken.exceptions.ArtikelGroepBevatDitArtikelAlException;
 import jakarta.persistence.*;
 
 import java.util.Collections;
@@ -13,7 +12,7 @@ public class ArtikelGroep {
     private long id;
     private String naam;
     @OneToMany(mappedBy = "artikelGroep")
-    @OrderBy("naam, verkoopprijs")
+    @OrderBy("naam")
     private Set<Artikel> artikels;
 
     public long getId() {
@@ -26,10 +25,4 @@ public class ArtikelGroep {
     public Set<Artikel> getArtikels() {
         return Collections.unmodifiableSet(artikels);
     }
-    public void voegArtikelToe(Artikel artikel) {
-        if (!artikels.add(artikel)) {
-            throw new ArtikelGroepBevatDitArtikelAlException();
-        }
-    }
-
 }
