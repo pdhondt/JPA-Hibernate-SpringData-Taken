@@ -52,10 +52,10 @@ class ArtikelController {
         artikelService.wijzigVerkoopprijs(id, prijs.bedrag());
     }
     @GetMapping(params = "naamBevat")
-    Stream<ArtikelBeknopt> findByNaamBevat(String naamBevat) {
+    Stream<ArtikelBeknoptMetArtikelGroepNaam> findByNaamBevat(String naamBevat) {
         return artikelService.findByNaamBevat(naamBevat)
                 .stream()
-                .map(ArtikelBeknopt::new);
+                .map(ArtikelBeknoptMetArtikelGroepNaam::new);
     }
     @GetMapping(params = "minimumWinst")
     Stream<ArtikelBeknopt> findMetMiniumumWinst(BigDecimal minimumWinst) {
